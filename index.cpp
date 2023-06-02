@@ -1,4 +1,4 @@
-#include <Windows.h>
+#include <windows.h>
 #include <iostream>
 #include <time.h>
 using namespace std;
@@ -8,6 +8,27 @@ void limparConsole(bool pausar)
     if (pausar)
         system("pause");
     system("cls");
+}
+
+void randomizarMatriz(int matriz[2][4])
+{
+    int historicoAleatorio[4] = {};
+
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            int random = 1 + rand() % 4;
+
+            while (historicoAleatorio[random - 1] == 2)
+            {
+                random = 1 + rand() % 4;
+            }
+
+            historicoAleatorio[random - 1]++;
+            matriz[i][j] = random;
+        }
+    }
 }
 
 void imprimirTabela(int matriz[2][4])
@@ -39,28 +60,13 @@ int main()
     // VARIAVEIS DO JOGO.
     int matrizDado[2][4] = {};
     int matrizJogo[2][4] = {};
-    int randomHistory[4] = {};
     int acertos = 0;
 
     srand(time(0));
     setlocale(LC_ALL, "Portuguese");
 
-    // INICIAR MATRIZ RANDOMICA.
-    for (int i = 0; i < 2; i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            int random = 1 + rand() % 4;
-
-            while (randomHistory[random - 1] == 2)
-            {
-                random = 1 + rand() % 4;
-            }
-
-            randomHistory[random - 1]++;
-            matrizDado[i][j] = random;
-        }
-    }
+    // INICIA A MATRIZ RANDOMICA.
+    randomizarMatriz(matrizDado);
 
     // TABULEIRO.
     imprimirTabela(matrizDado);
